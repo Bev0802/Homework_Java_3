@@ -12,9 +12,9 @@ public class Task_01{
             intListRnd[i] = intAListRnd.get(i);            
         }
         System.out.println(Arrays.toString(intListRnd));
-        int[] sortItems = sort(intListRnd); 
+        int[] sortlist = sort(intListRnd); 
 
-        System.out.println(Arrays.toString(sortItems));   
+        System.out.println(Arrays.toString(sortlist));   
     }
     
         ///////////////////////////////////////// ФУНКЦИИ ////////////////////////////////////
@@ -28,25 +28,25 @@ public class Task_01{
         }    
 
 
-        public static int[] sort(int[] arr) {
-            int[] items = Arrays. copyOf(arr, arr.length); 
-            doSort(items); 
-            return items; 
+        public static int[] sort(int[] array) {
+            int[] list = Arrays. copyOf(array, array.length); 
+            doSort(list); 
+            return list; 
         } 
     
-        public static void doSort(int[] items) { 
-            int len = items.length; 
+        public static void doSort(int[] list) { 
+            int len = list.length; 
             if (len == 1) 
             return; 
         
             int lLeft = len/2; 
-            int[] left = Arrays.copyOf(items, lLeft); 
-            int[] right = Arrays.copyOfRange(items, lLeft, len); 
+            int[] left = Arrays.copyOf(list, lLeft); 
+            int[] right = Arrays.copyOfRange(list, lLeft, len); 
         
             doSort(left); 
             doSort(right); 
         
-            merge(left, right, items); 
+            merge(left, right, list); 
         } 
         
         public static void merge(int[] left, int[] right, int[] result) { 
