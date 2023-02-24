@@ -1,61 +1,70 @@
 //Реализовать алгоритм сортировки слиянием.
-
 import java.util.Random;
 import java.util.ArrayList;
-
-public class Task_01 {
-
+import java.util.Arrays;;
+public class Task_01{
     public static void main(String[] args) {
-        ArrayList<Integer> intListRnd = new ArrayList<>();
-        random_list(intListRnd, 6, 1, 99);        
+          
+        ArrayList<Integer> intAListRnd = new ArrayList<>();
+        random_list(intAListRnd, 10, 1, 99);
+        int[] intListRnd = new int [intAListRnd.size()];
+        for (int i = 0; i < intListRnd.length; i++) {
+            intListRnd[i] = intAListRnd.get(i);            
+        }
+        System.out.println(Arrays.toString(intListRnd));
+        int[] sortItems = sort(intListRnd); 
 
-        sortMerge(intListRnd);
-        System.out.println(intListRnd);        
+        System.out.println(Arrays.toString(sortItems));   
     }
+    
+        ///////////////////////////////////////// ФУНКЦИИ ////////////////////////////////////
+    
+        // функция созает список случаных чисел в заднном диапазоне и выводин на печать.
+        public static void random_list(ArrayList<Integer> list, int sise, int start, int and) {
+            var rndel = new Random();
+            for (int i = 0; i < sise; i++) {
+                list.add(rndel.nextInt(start, and));
+            }            
+        }    
 
-    ///////////////////////////////////////// ФУНКЦИИ ////////////////////////////////////
 
-    // функция созает список случаных чисел в заднном диапазоне и выводин на печать.
-    public static void random_list(ArrayList<Integer> list, int sise, int start, int and) {
-        var rndel = new Random();
-        for (int i = 0; i < sise; i++) {
-            list.add(rndel.nextInt(start, and));
-        }
-        System.out.println(list);
-    }
-    // функция сортировки
-    public static void sortMerge (ArrayList<Integer> list){
-        if (list.size() < 2) {
-            return;
-        }
-        int sizeLR = list.size()/2;                    
-        ArrayList<Integer> leftList = new ArrayList<>(list.subList (0, sizeLR));
-        ArrayList<Integer> rightList = new ArrayList<>(list.subList(sizeLR, list.size()));
-              
-        //sortMerge(leftList);
-        //sortMerge(rightList);
-                
-        merge(list, leftList, rightList);
-    }                
-    //функция слияния
-    public static void merge(ArrayList<Integer> list, 
-    ArrayList<Integer> leftList, ArrayList<Integer> rightList) { 
-        int l = 0, r = 0;
-        for (int i = 0; i < list.size(); i++) {
-            while (l < leftList.size() && r < rightList.size()) {
-                if (leftList.get(l) < rightList.get(r)) {
-                    list.add(i, leftList.get(l));
-                    leftList.remove(l);
-                    l++;                                       
-                }
-                else {
-                    list.add(i, rightList.get(r));
-                    leftList.remove(r);   
-                    r++;                   
-                }
-            }        
-            
-        }
-    }   
+        public static int[] sort(int[] arr) {
+            int[] items = Arrays. copyOf(arr, arr.length); 
+            doSort(items); 
+            return items; 
+        } 
+    
+        public static void doSort(int[] items) { 
+            int len = items.length; 
+            if (len == 1) 
+            return; 
         
-}
+            int lLeft = len/2; 
+            int[] left = Arrays.copyOf(items, lLeft); 
+            int[] right = Arrays.copyOfRange(items, lLeft, len); 
+        
+            doSort(left); 
+            doSort(right); 
+        
+            merge(left, right, items); 
+        } 
+        
+        public static void merge(int[] left, int[] right, int[] result) { 
+            int l = 0; 
+            int r = 0; 
+            int i = 0; 
+        
+            while (l < left.length && r < right.length) { 
+                if (left[l] < right[r]) { 
+                    result[i] = left[l]; 
+                    l++; 
+                } else { 
+                    result[i] = right[r]; 
+                    r++; 
+                } 
+                i++; 
+            } 
+            System.arraycopy(left, l, result, i, left.length - l); 
+            System.arraycopy(right, r, result, i, right.length - r); 
+        } 
+}  
